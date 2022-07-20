@@ -44,5 +44,5 @@ class Perceptron:
         pass
 
     def predict(self, X_test: np.ndarray) -> np.ndarray:
-        pred = np.argmax(np.dot(w, X_test.T), axis = 1) #(C,D) * (D,N) -> (C,N)
+        pred = np.argmax(np.dot(w, X_test.T), axis = 0) #(C,D) * (D,N) -> (C,N)
         return
