@@ -1,2 +1,2 @@
-# Multiclass-Perceptron-
-Python file for Multiclass Perceptron update rule - both vectorized and unvectorized form.
+# Multiclass-Perceptron
+Implemented Perceptron update rule in Python from scratch, both vectorized and unvectorized form.
