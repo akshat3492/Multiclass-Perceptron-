@@ -30,9 +30,34 @@ class Perceptron:
         """
         # TODO: implement me
         N, n_dim = X_train.shape[0], X_train.shape[1] 
-        self.w = np.random.rand(self.n_class, n_dim) # (C, D)
+        self.w = np.random.randn(self.n_class, n_dim) # (C, D)
         losses = []
         
+        # first method by calculating grad_w -> a better approach
+        for epoch in range(self.epochs):
+            w_grad = np.zeros(self.w.shape) # (C,D)
+            
+            #p = np.random.permutation(N)
+            #X_temp, y_temp = X_train[p], y_train[p]
+        
+            scores = np.dot(X_train, self.w.T) #(N, C)
+            scores_y = scores[np.arange(N), y_train].reshape(-1,1)
+            I = scores > scores_y #(N, C)
+            
+            for j in range(N):
+                xi, yi = X_train[j], y_train[j] #xi -> (1, D), yi -> (1, 1)
+                w_grad[yi, :] -= np.sum(I[j, :]) * xi #(1, D)
+            
+            w_grad[:,:] += np.dot(I.T, X_train) #(C,N) @ (N, D) -> (C, D) 
+            
+            #weight update
+            self.w -= self.lr * w_grad  
+            
+            self.lr = self.lr * 0.95
+            
+            
+        #second method with update rule
+        '''
         for i in range(self.epochs):
             
             p = np.random.permutation(N)
@@ -57,7 +82,7 @@ class Perceptron:
                     self.w[to_update_c] -= self.lr * xi
             
             self.lr = self.lr * 0.95
-
+        '''
         pass
 
     def predict(self, X_test: np.ndarray) -> np.ndarray:
